@@ -1,0 +1,6 @@
+.idea
+*~
+tests/temp
+npm-debug.log
+work.js
+node_modules

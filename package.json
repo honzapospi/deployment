@@ -1,0 +1,29 @@
+{
+  "name": "jp-deployment",
+  "version": "1.0.8",
+  "description": "Deploy your project anywhere.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha tests/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/honzapospi/deployment.git"
+  },
+  "author": "Jan Pospisil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/honzapospi/deployment/issues"
+  },
+  "homepage": "https://github.com/honzapospi/deployment#readme",
+  "dependencies": {
+    "fs-extra": "^1.0.0",
+    "md5-file": "^3.1.1",
+    "ssh2-sftp-client": "^1.0.5"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "randomstring": "^1.1.5"
+  }
+}
