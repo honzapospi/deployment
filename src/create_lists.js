@@ -35,7 +35,7 @@ module.exports = function (localRoot, deployedFiles, ignore) {
                 });
             }
         }
-        console.log('');
+        process.stdout.write("\n");
         resolve({
             localList: newLocalList,
             remoteList: newRemoteList,

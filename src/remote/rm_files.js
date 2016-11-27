@@ -8,7 +8,7 @@ function rm_files(files, deployment, resolve, reject) {
     let fileToRemove = files.pop();
     if(fileToRemove){
         deployment.delete(fileToRemove).then(() => {
-            console.log('Deleting file '+fileToRemove);
+            process.stdout.write('.');
             rm_files(files, deployment, resolve, reject);
         }).catch(e => {
             if(e.message == 'No such file'){
@@ -17,7 +17,7 @@ function rm_files(files, deployment, resolve, reject) {
             } else {
                 // maybe is a directory
                 deployment.rmdir(fileToRemove, true).then(() => {
-                    console.log('Deleting directory '+fileToRemove);
+                    process.stdout.write('.');
                     rm_files(files, deployment, resolve, reject);
                 });
             }
