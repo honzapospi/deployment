@@ -19,6 +19,8 @@ function rm_files(files, deployment, resolve, reject) {
                 deployment.rmdir(fileToRemove, true).then(() => {
                     process.stdout.write('.');
                     rm_files(files, deployment, resolve, reject);
+                }).catch(e => {
+                    console.log('Unable to remove file: '+fileToRemove);
                 });
             }
         });
