@@ -22,6 +22,8 @@ function deleteFiles(list, remoteRoot, deployment, resolve, reject) {
                     })
                 }
             })
+        }).catch(e => {
+            console.log('Failed to delete file '+remoteRoot + fileToDelete.name+' with message: '+e.message);
         });
     } else {
         resolve();
