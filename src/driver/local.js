@@ -74,10 +74,12 @@ class Local {
         return new Promise((resolve, reject) => {
             if(fs.existsSync(filename)){
                 fs.unlink(filename, (err) => {
-                    if(err)
+                    if(err){
                         reject(err);
-                    else
+                    }
+                    else {
                         resolve();
+                    }
                 });
             } else {
                 resolve();

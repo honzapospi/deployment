@@ -6,8 +6,6 @@ module.exports = function(config){
         }
         if(config.localRoot.charAt(0) != '/')
             throw new Error('localRoot must start with /');
-        if(config.remoteRoot.charAt(0) != '/')
-            throw new Error('remoteRoot must start with /');
         if(config.type == 'ssh2'){
             if(!config.connect){
                 throw new Error('Missing required section "connect: {...}"');
