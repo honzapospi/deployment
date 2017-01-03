@@ -27,6 +27,9 @@ module.exports = function (localRoot, deployedFiles, ignore) {
                     process.stdout.write('.');
                 newRemoteList.push(localList[i]);
             } else {
+                counter++;
+                if(counter % 10 == 0)
+                    process.stdout.write('.');
                 newLocalList.push(localList[i]);
             }
             if(index !== undefined){
@@ -35,7 +38,7 @@ module.exports = function (localRoot, deployedFiles, ignore) {
                 });
             }
         }
-        process.stdout.write("\n");
+        //process.stdout.write("\n");
         resolve({
             localList: newLocalList,
             remoteList: newRemoteList,
@@ -51,9 +54,15 @@ function getFiles(dir, ignore, prefix = ''){
         let filename = dir+'/'+files[i];
         if(ignore.indexOf(filename) == -1){
             if(fs.lstatSync(filename).isFile()){
+                let md5 = null;
+                try{
+                    md5 = md5file.sync(filename);
+                } catch(e) {
+                    md5 = null;
+                }
                 list.push({
                     name: prefix + '/' + files[i],
-                    md5: md5file.sync(filename)
+                    md5: md5
                 });
             } else if(fs.lstatSync(filename).isDirectory()){
                 list = list.concat(getFiles(filename, ignore, prefix + '/' +files[i]));

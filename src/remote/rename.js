@@ -9,15 +9,16 @@ function rename(uploaded, remoteRoot, deployment, resolve, reject, counter, tota
     if(fileToRename){
         // delete destination file before rename
         deployment.delete(remoteRoot + fileToRename.name).then(() => {
+            process.stdout.write("\n"+'('+counter+' of '+total+') Renaming '+fileToRename.name);
             deployment.rename(remoteRoot + fileToRename.name+'.deployment', remoteRoot + fileToRename.name).then(() => {
-                console.log('('+counter+' of '+total+') Renaming '+fileToRename.name);
+                process.stdout.write('...OK');
                 counter++;
                 rename(uploaded, remoteRoot, deployment, resolve, reject, counter, total);
             })
         }).catch(e => {
             if(e.message == 'No such file'){
                 deployment.rename(remoteRoot + fileToRename.name+'.deployment', remoteRoot + fileToRename.name).then(() => {
-                    console.log('('+counter+' of '+total+') Renaming '+fileToRename.name);
+                    process.stdout.write('...OK');
                     counter++;
                     rename(uploaded, remoteRoot, deployment, resolve, reject, counter, total);
                 })

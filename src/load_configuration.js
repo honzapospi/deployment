@@ -10,6 +10,5 @@ module.exports = () => {
         if(config.connect && !config.connect.port)
             config.connect.port = 22;
     }
-
     return config;
 }

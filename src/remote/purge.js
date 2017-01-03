@@ -24,7 +24,7 @@ function clear_dirs(dirs, deployment, remoteRoot, resolve, reject){
                 throw e;
         });
     } else {
-        process.stdout.write("\n");
+        //process.stdout.write("\n");
         resolve(); // purge complete
     }
 };

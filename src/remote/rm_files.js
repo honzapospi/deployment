@@ -7,20 +7,22 @@ module.exports = function(files, deployment){
 function rm_files(files, deployment, resolve, reject) {
     let fileToRemove = files.pop();
     if(fileToRemove){
+        process.stdout.write("\n"+ 'Removing file "'+fileToRemove+'"');
         deployment.delete(fileToRemove).then(() => {
-            process.stdout.write('.');
+            process.stdout.write('...OK');
             rm_files(files, deployment, resolve, reject);
         }).catch(e => {
             if(e.message == 'No such file'){
-                console.log('Unable to delete file '+fileToRemove+'. File does not exist.');
+                process.stdout.write('...FAILED. '+'Unable to delete file '+fileToRemove+'. File does not exist.');
                 rm_files(files, deployment, resolve, reject);
             } else {
                 // maybe is a directory
                 deployment.rmdir(fileToRemove, true).then(() => {
-                    process.stdout.write('.');
+                    process.stdout.write('...OK');
                     rm_files(files, deployment, resolve, reject);
                 }).catch(e => {
-                    console.log('Unable to remove file: '+fileToRemove);
+                    process.stdout.write("\n"+'Unable to remove file: '+fileToRemove);
+                    deployment.close(); // or continue?
                 });
             }
         });

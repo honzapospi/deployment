@@ -1,6 +1,6 @@
 {
   "name": "jp-deployment",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Deploy your project anywhere.",
   "main": "index.js",
   "scripts": {
