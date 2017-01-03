@@ -21,9 +21,9 @@ function upload(localList, remoteList, deployment, uploaded, localRoot, remoteRo
             if(e.message == 'No such file'){
                 let dirname = path.dirname(remoteRoot + fileToUpload.name);
                 deployment.mkdir(dirname, true).then(() => {
-                    process.stdout.write('('+counter+' of '+total+') Uploading file '+fileToUpload.name);
+                    //process.stdout.write('('+counter+' of '+total+') Uploading file '+fileToUpload.name);
                     deployment.uploadFile(localRoot + fileToUpload.name, remoteRoot + fileToUpload.name+'.deployment').then(() => {
-                        process.stdout.write('...OK'+"\n");
+                        process.stdout.write('...OK');
                         counter++;
                         uploaded.push(fileToUpload);
                         remoteList.push(fileToUpload);
