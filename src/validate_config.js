@@ -1,3 +1,5 @@
+const tracer = require('./tracer');
+
 module.exports = function(config){
     let supportedTypes = ['ssh2', 'local'];
     try {
@@ -20,8 +22,7 @@ module.exports = function(config){
                 throw new Error('Missing required parameter "connect.password"');
             }
         }
-
-        console.log('Configuration file is valid.');
+        tracer.printLine('Configuration file is valid.', false);
         return true;
     } catch (e){
         console.log('Error: '+e.message);

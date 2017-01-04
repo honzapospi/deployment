@@ -3,8 +3,7 @@ module.exports = function(config){
         return require('./driver/ssh2')(config.connect);
     } else if(config.type == 'local'){
         return require('./driver/local')();
-    }
-    else {
+    } else {
         console.log('Unsupported type '+config.type);
     }
 }

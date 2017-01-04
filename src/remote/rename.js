@@ -1,3 +1,6 @@
+const PERMISSION_DENIED = require('./error_messages').PERMISSION_DENIED;
+const NO_SUCH_FILE = require('./error_messages').NO_SUCH_FILE;
+
 module.exports = (uploaded, remoteRoot, deployment) => {
     return new Promise((resolve, reject) => {
         rename(uploaded, remoteRoot, deployment, resolve, reject, 1, uploaded.length);

@@ -1,4 +1,5 @@
 var Client = require('ssh2-sftp-client');
+const FILE_IS_DIRECTORY = require('../remote/error_messages').FILE_IS_DIRECTORY;
 
 var SftpDeployment = function(options){
     this.options = options;
@@ -14,7 +15,13 @@ SftpDeployment.prototype.list = function(dir){
 };
 
 SftpDeployment.prototype.uploadFile = function(localFilename, remoteFilename){
-    return this.sftp.put(localFilename, remoteFilename);
+    return new Promise((resolve, reject) => {
+        this.sftp.put(localFilename, remoteFilename).then(() => {
+            resolve();
+        }).catch(e => {
+            reject(e);
+        });
+    })
 };
 
 SftpDeployment.prototype.mkdir = function (dir) {
@@ -34,7 +41,22 @@ SftpDeployment.prototype.rename = function(from, to){
 }
 
 SftpDeployment.prototype.delete = function(filename){
-    return this.sftp.delete(filename);
+    return new Promise((fullfil, reject) => {
+        this.sftp.delete(filename).then(() => {
+            fullfil();
+        }).catch((e) => {
+            if(e.message == 'Failure'){
+                // todo check reason
+                reject({
+                    message: FILE_IS_DIRECTORY,
+                    e: e
+                });
+            } else {
+                reject(e);
+            }
+        });
+    });
+
 }
 
 SftpDeployment.prototype.getFileContent = function(filename){

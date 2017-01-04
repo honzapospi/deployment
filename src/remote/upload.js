@@ -1,4 +1,7 @@
 const path = require('path');
+const PERMISSION_DENIED = require('./error_messages').PERMISSION_DENIED;
+const NO_SUCH_FILE = require('./error_messages').NO_SUCH_FILE;
+
 
 module.exports = (localList, remoteList, deployment, localRoot, remoteRoot) => {
     return new Promise((resolve, reject) => {
@@ -18,7 +21,7 @@ function upload(localList, remoteList, deployment, uploaded, localRoot, remoteRo
             remoteList.push(fileToUpload);
             upload(localList, remoteList, deployment, uploaded, localRoot, remoteRoot, resolve, reject, counter, total);
         }).catch(e => {
-            if(e.message == 'No such file'){
+            if(e.message == NO_SUCH_FILE){
                 let dirname = path.dirname(remoteRoot + fileToUpload.name);
                 deployment.mkdir(dirname, true).then(() => {
                     //process.stdout.write('('+counter+' of '+total+') Uploading file '+fileToUpload.name);
@@ -30,16 +33,17 @@ function upload(localList, remoteList, deployment, uploaded, localRoot, remoteRo
                         upload(localList, remoteList, deployment, uploaded, localRoot, remoteRoot, resolve, reject, counter, total);
                     })
                 }).catch(e => {
-                    if(e.message.substr(0, 25) == 'EACCES: permission denied') {
-                        process.stdout.write('...Failed. Permission denied'+"\n");
+                    if(e.message == PERMISSION_DENIED) {
+                        process.stdout.write('...Failed. Permission denied');
+                        counter++;
                         upload(localList, remoteList, deployment, uploaded, localRoot, remoteRoot, resolve, reject, counter, total);
                     } else {
-                        process.stdout.write("\n"+'Unable to create directory "'+dirname+'". '+e.message+'.');
-                        deployment.close();
+                        throw e;
                     }
                 });
-            } else if(e.message.substr(0, 25) == 'EACCES: permission denied') {
-                process.stdout.write('...Failed. Permission denied'+"\n");
+            } else if(e.message == PERMISSION_DENIED) {
+                process.stdout.write('...Failed. Permission denied');
+                counter++;
                 upload(localList, remoteList, deployment, uploaded, localRoot, remoteRoot, resolve, reject, counter, total);
             } else {
                 reject(e);
