@@ -1,4 +1,6 @@
 const fs  = require('fs-extra');
+const PERMISSION_DENIED = require('../remote/error_messages').PERMISSION_DENIED;
+const FILE_IS_DIRECTORY = require('../remote/error_messages').FILE_IS_DIRECTORY;
 
 class Local {
     connect(){
@@ -75,7 +77,20 @@ class Local {
             if(fs.existsSync(filename)){
                 fs.unlink(filename, (err) => {
                     if(err){
-                        reject(err);
+                        // check if file is a directory
+                        if(fs.lstatSync(filename).isDirectory()){
+                            reject({
+                                message: FILE_IS_DIRECTORY,
+                                e: err
+                            });
+                        } else if(err.message.substr(0, 5) == 'EPERM'){
+                            reject({
+                                message: PERMISSION_DENIED,
+                                e: err
+                            })
+                        } else {
+                            reject(err);
+                        }
                     }
                     else {
                         resolve();

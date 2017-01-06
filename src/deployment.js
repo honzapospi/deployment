@@ -22,10 +22,10 @@ function run(config, appRoot){
                 tracer.processStart('Creating deployment list of files.', true);
                 require('./create_lists')(appRoot + config.localRoot, deployedFiles, config.ignore).then((lists) => {
                     // upload files from local list
-                    process.stdout.write("\n"+'Uploading files...');
+                    tracer.printLine('Uploading files...');
                     require('./remote/upload')(lists.localList, lists.remoteList, deployment, appRoot + config.localRoot, config.remoteRoot).then(uploaded => {
                         // lists.remoteList should be + localList now
-                        process.stdout.write("\n"+'Renaming files...');
+                        tracer.printLine('Renaming files...');
                         // rename uploaded files
                         require('./remote/rename')(uploaded, config.remoteRoot, deployment).then(() => {
                             // delete files

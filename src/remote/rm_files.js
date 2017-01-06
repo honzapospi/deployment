@@ -37,7 +37,7 @@ function rm_files(files, deployment, resolve, reject) {
                     }
                 })
             } else {
-                console.log(e.message);
+                console.log('xxxxx'+e.message+'xxxxx');
                 throw e;
             }
         });

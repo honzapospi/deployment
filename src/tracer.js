@@ -24,5 +24,8 @@ module.exports = {
             process.stdout.write("\n"+msg);
         else
             process.stdout.write(msg);
+    },
+    dot: function(){
+        process.stdout.write('.');
     }
 }

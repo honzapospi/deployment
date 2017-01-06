@@ -1,5 +1,6 @@
 const fs  = require('fs');
 const md5file = require('md5-file');
+const tracer = require('./tracer');
 
 module.exports = function (localRoot, deployedFiles, ignore) {
     return new Promise((resolve, reject) => {
@@ -24,7 +25,7 @@ module.exports = function (localRoot, deployedFiles, ignore) {
             if(index !== undefined && deployedFiles[index].md5 == localList[i].md5){
                 counter++;
                 if(counter % 10 == 0)
-                    process.stdout.write('.');
+                    tracer.dot();
                 newRemoteList.push(localList[i]);
             } else {
                 counter++;
@@ -47,10 +48,13 @@ module.exports = function (localRoot, deployedFiles, ignore) {
     });
 }
 
-function getFiles(dir, ignore, prefix = ''){
+function getFiles(dir, ignore, prefix = '', counter = 0){
     let list = [];
     let files = fs.readdirSync(dir);
     for(let i = 0; i < files.length; i++){
+        counter++;
+        if(counter % 10 == 0)
+            tracer.dot();
         let filename = dir+'/'+files[i];
         if(ignore.indexOf(filename) == -1){
             if(fs.lstatSync(filename).isFile()){
@@ -65,7 +69,7 @@ function getFiles(dir, ignore, prefix = ''){
                     md5: md5
                 });
             } else if(fs.lstatSync(filename).isDirectory()){
-                list = list.concat(getFiles(filename, ignore, prefix + '/' +files[i]));
+                list = list.concat(getFiles(filename, ignore, prefix + '/' +files[i], counter));
             }
         }
     }
