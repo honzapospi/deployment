@@ -65,6 +65,11 @@ SftpDeployment.prototype.delete = function(filename){
                     message: FILE_IS_DIRECTORY,
                     e: e
                 });
+            } else if(e.message == 'File is a directory'){
+                reject({
+                    message: FILE_IS_DIRECTORY,
+                    e: e
+                });
             } else {
                 reject(e);
             }
