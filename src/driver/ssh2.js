@@ -1,5 +1,6 @@
 var Client = require('ssh2-sftp-client');
 const FILE_IS_DIRECTORY = require('../remote/error_messages').FILE_IS_DIRECTORY;
+const FILE_EXIST = require('../remote/error_messages').FILE_EXIST;
 
 var SftpDeployment = function(options){
     this.options = options;
@@ -25,7 +26,20 @@ SftpDeployment.prototype.uploadFile = function(localFilename, remoteFilename){
 };
 
 SftpDeployment.prototype.mkdir = function (dir) {
-    return this.sftp.mkdir(dir, true);
+    return new Promise((resolve, reject) => {
+        this.sftp.mkdir(dir, true).then(() => {
+            resolve();
+        }).catch(e => {
+            if(e.message == 'Invalid parameter'){ // todo check if file exist
+                reject({
+                    message: FILE_EXIST,
+                    e: e
+                });
+            } else {
+                reject(e);
+            }
+        });
+    })
 }
 
 SftpDeployment.prototype.rmdir = function (dir) {
