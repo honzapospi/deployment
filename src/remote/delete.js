@@ -33,6 +33,16 @@ function deleteFiles(list, remoteRoot, deployment, resolve, reject) {
                         }
                     })
                 }
+            }).catch(e => {
+                if(e.message == NO_SUCH_FILE){
+                    tracer.processError(NO_SUCH_FILE);
+                    deleteFiles(list, remoteRoot, deployment, resolve, reject);
+                } else if (e.message == PERMISSION_DENIED){
+                    tracer.processError(PERMISSION_DENIED);
+                    deleteFiles(list, remoteRoot, deployment, resolve, reject);
+                } else {
+                    throw e;
+                }
             })
         }).catch(e => {
             if(e.message == NO_SUCH_FILE){
