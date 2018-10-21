@@ -11,13 +11,13 @@ You nedd to have Node JS > 8 installed.
 Yo can use NPM or YARN to install this tool.
 
 ```
-npm install jp-deployment
+npm install jp-deployment --save-dev
 ```
 
 or
 
 ```
-yarn add jp-deployment
+yarn add jp-deployment --dev
 ```
 
 Then create a file in your project root directory depands on drive. Here are a few examples:<br />
@@ -53,7 +53,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Author
 
-- **Billie Thompson** - _Programmer_ - [www.jan-pospisil.cz](https://www.jan-pospisil.cz),
+- **Jan Pospíšil** - _Programmer_ - [www.jan-pospisil.cz](https://www.jan-pospisil.cz),
 
 ## License
 
