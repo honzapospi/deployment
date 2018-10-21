@@ -53,7 +53,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Author
 
-- **Jan Pospíšil** - _Programmer_ - [www.jan-pospisil.cz](https://www.jan-pospisil.cz),
+- **Jan Pospíšil** - _Programmer_ - [www.jan-pospisil.cz](https://www.jan-pospisil.cz)
 
 ## License
 
