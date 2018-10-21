@@ -10,6 +10,8 @@ You nedd to have Node JS > 8 installed.
 
 Yo can use NPM or YARN to install this tool.
 
+1. Install this tool
+
 ```
 npm install jp-deployment --save-dev
 ```
@@ -20,8 +22,15 @@ or
 yarn add jp-deployment --dev
 ```
 
-Then create a file in your project root directory depands on drive. Here are a few examples:<br />
-(_To see more examples look at directory /src/config_example_)
+2. Create deploy.js file in your project root directory. Config depands on driver. See below.
+3. Run deployment with Node JS
+
+```
+node deploy.js
+```
+
+Create a file in your project root directory depands on drive. Here are a few examples:<br />
+(_To see more examples look at directory ./src/config_example_)
 
 ## Driver local
 
